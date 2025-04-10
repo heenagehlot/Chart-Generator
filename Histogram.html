@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Histogram Generator</title>
+  <link rel="stylesheet" href="../css/Charts.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <h1 class="heading">Histogram Generator</h1>
+
+  <div class="input-container box">
+    <h2>Enter Data</h2>
+
+    <label for="values">Values (comma separated):</label>
+    <input type="text" id="values" placeholder="e.g., 5, 10, 10, 15, 20, 20, 20, 25">
+
+    <button onclick="generateHistogram()">Generate Histogram</button>
+  </div>
+
+  <div class="output-container box">
+    <h2>Histogram Output</h2>
+    <div class="chart-output">
+      <canvas id="histogramChartCanvas"></canvas>
+    </div>
+  </div>
+
+  <script>
+    function generateHistogram() {
+      const rawValues = document.getElementById('values').value.split(',').map(v => parseFloat(v.trim()));
+      
+      // Create bins (e.g., auto grouping for simplicity)
+      const binSize = 5;
+      const min = Math.min(...rawValues);
+      const max = Math.max(...rawValues);
+      const bins = [];
+      const labels = [];
+
+      for (let i = Math.floor(min); i <= Math.ceil(max); i += binSize) {
+        labels.push(`${i} - ${i + binSize}`);
+        bins.push(0);
+      }
+
+      rawValues.forEach(val => {
+        const index = Math.floor((val - min) / binSize);
+        bins[index] += 1;
+      });
+
+      const ctx = document.getElementById('histogramChartCanvas').getContext('2d');
+      if (window.histogramChart) {
+        window.histogramChart.destroy();
+      }
+
+      window.histogramChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Frequency',
+            data: bins,
+            backgroundColor: '#ff9f40',
+            borderColor: '#fff',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              labels: { color: '#fff' }
+            }
+          },
+          scales: {
+            x: {
+              ticks: { color: '#fff' },
+              title: {
+                display: true,
+                text: 'Bins',
+                color: '#fff'
+              }
+            },
+            y: {
+              ticks: { color: '#fff' },
+              title: {
+                display: true,
+                text: 'Frequency',
+                color: '#fff'
+              }
+            }
+          }
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

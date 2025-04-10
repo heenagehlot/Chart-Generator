@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Scatter Plot Generator</title>
+  <link rel="stylesheet" href="../css/Charts.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <h1 class="heading">Scatter Plot Generator</h1>
+
+  <div class="input-container box">
+    <h2>Enter Data</h2>
+
+    <label for="scatterX">X Values (comma separated):</label>
+    <input type="text" id="scatterX" placeholder="e.g., 1, 2, 3, 4">
+
+    <label for="scatterY">Y Values (comma separated):</label>
+    <input type="text" id="scatterY" placeholder="e.g., 5, 10, 15, 20">
+
+    <button onclick="generateScatterPlot()">Generate Scatter Plot</button>
+  </div>
+
+  <div class="output-container box">
+    <h2>Scatter Plot Output</h2>
+    <div class="chart-output">
+      <canvas id="scatterPlotCanvas"></canvas>
+    </div>
+  </div>
+
+  <script>
+    function generateScatterPlot() {
+      const xValues = document.getElementById('scatterX').value.split(',').map(v => parseFloat(v.trim()));
+      const yValues = document.getElementById('scatterY').value.split(',').map(v => parseFloat(v.trim()));
+
+      if (xValues.length !== yValues.length) {
+        alert("X and Y values must be equal in number.");
+        return;
+      }
+
+      const scatterData = xValues.map((x, i) => ({ x: x, y: yValues[i] }));
+
+      const ctx = document.getElementById('scatterPlotCanvas').getContext('2d');
+      if (window.scatterChart) {
+        window.scatterChart.destroy();
+      }
+
+      window.scatterChart = new Chart(ctx, {
+        type: 'scatter',
+        data: {
+          datasets: [{
+            label: 'Scatter Dataset',
+            data: scatterData,
+            backgroundColor: '#36a2eb'
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              labels: {
+                color: '#fff'
+              }
+            }
+          },
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'X-Axis',
+                color: '#fff'
+              },
+              ticks: {
+                color: '#fff'
+              },
+              grid: {
+                color: 'rgba(255,255,255,0.1)'
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Y-Axis',
+                color: '#fff'
+              },
+              ticks: {
+                color: '#fff'
+              },
+              grid: {
+                color: 'rgba(255,255,255,0.1)'
+              }
+            }
+          }
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

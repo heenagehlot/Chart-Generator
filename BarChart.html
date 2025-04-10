@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bar Chart Generator</title>
+  <link rel="stylesheet" href="../css/Charts.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <h1 class="heading">Bar Chart Generator</h1>
+
+  <div class="input-container box">
+    <h2>Enter Data</h2>
+
+    <label for="barLabels">Labels (comma separated):</label>
+    <input type="text" id="barLabels" placeholder="e.g., January, February, March">
+
+    <label for="barValues">Values (comma separated):</label>
+    <input type="text" id="barValues" placeholder="e.g., 10, 20, 30">
+
+    <button onclick="generateBarChart()">Generate Bar Chart</button>
+  </div>
+
+  <div class="output-container box">
+    <h2>Bar Chart Output</h2>
+    <div class="chart-output">
+      <canvas id="barChartCanvas"></canvas>
+    </div>
+  </div>
+
+  <script>
+    function generateBarChart() {
+      const labels = document.getElementById('barLabels').value.split(',').map(label => label.trim());
+      const values = document.getElementById('barValues').value.split(',').map(value => parseFloat(value.trim()));
+
+      const ctx = document.getElementById('barChartCanvas').getContext('2d');
+      if (window.barChart) {
+        window.barChart.destroy();
+      }
+
+      window.barChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Values',
+            data: values,
+            backgroundColor: [
+              '#ff6384',
+              '#36a2eb',
+              '#ffce56',
+              '#4bc0c0',
+              '#9966ff',
+              '#ff9f40'
+            ]
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              labels: {
+                color: '#fff'
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: '#fff'
+              },
+              grid: {
+                color: 'rgba(255,255,255,0.1)'
+              }
+            },
+            y: {
+              ticks: {
+                color: '#fff'
+              },
+              grid: {
+                color: 'rgba(255,255,255,0.1)'
+              }
+            }
+          }
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

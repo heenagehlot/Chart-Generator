@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Line Chart Generator</title>
+  <link rel="stylesheet" href="../css/Charts.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <h1 class="heading">Line Chart Generator</h1>
+
+  <div class="input-container box">
+    <h2>Enter Data</h2>
+
+    <label for="labels">Labels (comma separated):</label>
+    <input type="text" id="labels" placeholder="e.g., Jan, Feb, Mar">
+
+    <label for="values">Values (comma separated):</label>
+    <input type="text" id="values" placeholder="e.g., 30, 45, 60">
+
+    <button onclick="generateLineChart()">Generate Line Chart</button>
+  </div>
+
+  <div class="output-container box">
+    <h2>Line Chart Output</h2>
+    <div class="chart-output">
+      <canvas id="lineChartCanvas"></canvas>
+    </div>
+  </div>
+
+  <script>
+    function generateLineChart() {
+      const labels = document.getElementById('labels').value.split(',').map(label => label.trim());
+      const values = document.getElementById('values').value.split(',').map(value => parseFloat(value.trim()));
+
+      const ctx = document.getElementById('lineChartCanvas').getContext('2d');
+      if (window.lineChart) {
+        window.lineChart.destroy();
+      }
+
+      window.lineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Line Dataset',
+            data: values,
+            borderColor: '#36a2eb',
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderWidth: 2,
+            fill: true,
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              labels: {
+                color: '#fff'
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: { color: '#fff' }
+            },
+            y: {
+              ticks: { color: '#fff' }
+            }
+          }
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

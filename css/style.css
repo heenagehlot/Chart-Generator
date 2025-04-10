@@ -1,0 +1,112 @@
+/* === Reset & Base === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+  
+body {
+    background: url('../assets/BG\ image.jpg') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    padding: 4rem 1rem;
+    position: relative;
+    overflow: hidden;
+}
+  
+/* === Content Container === */
+.container {
+    text-align: center;
+    max-width: 1200px;
+    z-index: 1;
+}
+  
+/* === Neon Heading === */
+.heading {
+    font-size: 3.5rem;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    color: rgb(240, 240, 240);
+    text-shadow:
+        0 0 10px rgb(31, 31, 31),
+        0 0 20px rgb(31, 31, 31),
+        0 0 40px rgb(31, 31, 31);
+    margin-bottom: 3rem;
+}
+  
+/* === Cards Layout === */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+    justify-items: center;
+}
+  
+.card {
+    background-color: rgba(0, 0, 0, 0.9);
+    border: 2px solid #0ff;
+    color: #fff;
+    padding: 1.5rem 2rem;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px #0ff;
+    width: 250px;
+}
+  
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 20px #ff00ff;
+}
+  
+@media screen and (max-width: 1024px) {
+    .cards-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+  
+.card i {
+    display: block;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+  
+/* === Responsive === */
+@media (max-width: 768px) {
+    /* For mobile and smaller tablets */
+    body {
+        padding: 2rem 1rem; /* Reduced padding for smaller screens */
+    }
+
+    .heading {
+        font-size: 2.5rem; /* Slightly smaller heading */
+        margin-bottom: 2rem; /* Adjusted space below heading */
+    }
+
+    .cards-container {
+        grid-template-columns: 1fr; /* Stacked cards on mobile */
+        gap: 1.5rem; /* Reduced gap between cards */
+    }
+
+    .card {
+        width: 100%; /* Ensure cards take full width on mobile */
+        font-size: 1rem; /* Slightly smaller font size for mobile */
+        padding: 1rem; /* Reduced padding for better fit */
+    }
+
+    .card i {
+        font-size: 2rem; /* Slightly smaller icons */
+    }
+}
